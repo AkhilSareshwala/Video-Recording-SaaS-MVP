@@ -57,12 +57,24 @@ Utilized for its robust routing, API handling, and server-side rendering capabil
 -   **Browser Support**: `ffmpeg.wasm` requires `SharedArrayBuffer` support, which needs specific security headers (`Cross-Origin-Opener-Policy` and `Cross-Origin-Embedder-Policy`). This may limit embedding capabilities.
 -   **File Size**: Large video files may impact browser performance during processing.
 
-## Future Improvements
+: Serve videos via a CDN for global performance.
 
-1.  **Cloud Storage**: Migrate to AWS S3 or R2 for scalable video storage.
-2.  **Database**: Implement a proper database (Postgres) with Prisma/Drizzle.
-3.  **Authentication**: Add user accounts (Clerk/NextAuth) to manage recordings.
-4.  **Transcoding**: Implement server-side transcoding for adaptive bitrate streaming (HLS).
-5.  **CDN**: Serve videos via a CDN for global performance.
+ ## Deployment Notes (Vercel)
+
+This project is deployed on **Vercel** for demonstration purposes.
+
+- Screen recording, trimming, and client-side export work fully in production, as these features are handled entirely in the browser.
+- The sharing feature is fully functional in local development, where files and metadata can be persisted using the local filesystem.
+- On Vercel, serverless functions use an **ephemeral filesystem**, so file-based persistence (e.g. `public/uploads` and JSON files) is not retained across requests or redeployments.
+
+### Production Considerations
+
+In a real production setup, this would be addressed by:
+- Uploading videos to object storage (AWS S3, Cloudflare R2, or similar)
+- Storing video metadata and analytics in a database (PostgreSQL / SQLite / KV)
+- Generating signed or public URLs for secure, persistent sharing
+
+The current approach intentionally uses local storage as an **MVP mock implementation** to demonstrate the complete end-to-end flow without introducing external infrastructure dependencies.
+
 
 
