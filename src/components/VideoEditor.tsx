@@ -23,6 +23,7 @@ export default function VideoEditor() {
     const [trimmedUrl, setTrimmedUrl] = useState<string | null>(null);
     const [startTime, setStartTime] = useState("00:00:00");
     const [endTime, setEndTime] = useState("00:00:10");
+    const [duration, setDuration] = useState(0);
     const [isTrimming, setIsTrimming] = useState(false);
     const [isUploading, setIsUploading] = useState(false);
     const [uploadUrl, setUploadUrl] = useState<string | null>(null);
@@ -108,6 +109,7 @@ export default function VideoEditor() {
                                 className="w-full h-full object-cover"
                                 onLoadedMetadata={(e) => {
                                     const duration = e.currentTarget.duration;
+                                    setDuration(duration);
                                     setEndTime(formatTime(duration));
                                 }}
                             />
@@ -156,15 +158,18 @@ export default function VideoEditor() {
                                         <Input
                                             value={startTime}
                                             onChange={(e) => setStartTime(e.target.value)}
-                                            className="font-mono text-center text-lg tracking-widest bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800"
+                                            className="font-mono text-center text-lg tracking-widest bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white"
                                         />
                                     </div>
                                     <div className="space-y-2">
-                                        <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">End Time</label>
+                                        <div className="flex justify-between items-center">
+                                            <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">End Time</label>
+                                            <span className="text-xs text-muted-foreground">Total: {formatTime(duration)}</span>
+                                        </div>
                                         <Input
                                             value={endTime}
                                             onChange={(e) => setEndTime(e.target.value)}
-                                            className="font-mono text-center text-lg tracking-widest bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800"
+                                            className="font-mono text-center text-lg tracking-widest bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white"
                                         />
                                     </div>
                                 </div>
